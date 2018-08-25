@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     Container,
@@ -31,9 +32,10 @@ class BookPage extends Component {
                         <Col md={{ size: 8 }}>
                             <Card>
                                 <CardBody>
-                                    <Button className={"btn btn-info"}>
+                                    <Link className={"btn btn-info"} to="/">
                                         Back to search
-                                    </Button>
+                                    </Link>
+
                                     <br />
                                     <br />
                                     <ListGroup>
