@@ -1,116 +1,53 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { css } from 'react-emotion';
-import {
-    Container,
-    Row,
-    Col,
-    Card,
-    CardBody,
-    Input,
-    InputGroupButtonDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    InputGroup,
-    Media,
-    Button
-} from 'reactstrap';
-
-import Loader from 'react-spinners/FadeLoader';
+import Loader from './components/Loader';
+import BookPreview from './components/BookPreview';
+import SearchBar from './components/SearchBar';
+import { Container, Row, Col } from 'reactstrap';
 
 class LiveSearch extends Component {
 
     constructor(props) {
         super(props);
 
-        this.toggleDropDown = this.toggleDropDown.bind(this);
-        this.toggleSplit = this.toggleSplit.bind(this);
         this.state = {
-            dropdownOpen: false,
-            splitButtonOpen: false
+            isLoading: true,
+            selectedFilter: 'FILTER_BOTH'
         };
+
+        this.searchFilters = {
+            FILTER_FOR_SALE: 'For sale',
+            FILTER_NOT_FOR_SALE: 'Not for sale',
+            FILTER_BOTH: 'Both',
+        };
+
+        setTimeout(() => {this.setState({isLoading: false})}, 1000);
     }
 
-    toggleDropDown() {
+    changeFilter(filterKey) {
         this.setState({
-            dropdownOpen: !this.state.dropdownOpen
+            selectedFilter: filterKey
         });
     }
-
-    toggleSplit() {
-        this.setState({
-            splitButtonOpen: !this.state.splitButtonOpen
-        });
-    }
-
 
     render() {
-
-        const override = css`
-            display: block;
-            margin: 0 auto;
-            border-color: red;
-        `;
 
         return (
             <div>
                 <br/>
                 <Container>
                     <Row>
-                        <Col md={{ size: 10, offset: 1 }}>
-                            <h3>Live books search</h3>
-                            <Card>
-                                <CardBody>
-                                    <InputGroup>
-                                        <Input placeholder={"Search books ..."} />
-                                        <InputGroupButtonDropdown addonType="append" isOpen={this.state.dropdownOpen} toggle={this.toggleDropDown}>
-                                            <DropdownToggle className={"dropdown-toggle btn btn-info"} caret>
-                                                Both
-                                            </DropdownToggle>
-                                            <DropdownMenu>
-                                                <DropdownItem>For sale</DropdownItem>
-                                                <DropdownItem>Not fro sale</DropdownItem>
-                                                <DropdownItem>Both</DropdownItem>
-                                            </DropdownMenu>
-                                        </InputGroupButtonDropdown>
-                                    </InputGroup>
-                                </CardBody>
-                            </Card>
+                        <Col md={{ size: 12 }}>
+
+                            <SearchBar searchFilters={this.searchFilters}
+                                       selectedFilter={this.state.selectedFilter}
+                                       changeFilter={(filterKey) => this.changeFilter(filterKey)} />
                             <br />
 
-                            <div className='sweet-loading'>
-                                <Loader
-                                    className={override}
-                                    sizeUnit={"px"}
-                                    size={150}
-                                    color={'#8d96bc'}
-                                    loading={this.state.loading}
-                                />
-                            </div>
-
-                            <Media>
-                                <Media left top style={{paddingRight: '10px'}} href="#">
-                                    <Media style={{width: '128px'}} object src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" alt="Generic placeholder image" />
-                                </Media>
-                                <Media body>
-                                    <Media heading> Top aligned media </Media>
-                                    <div>
-                                        <b>Author: </b> Test author <br />
-                                        <b>Description: </b> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                    </div>
-                                    <br />
-                                    <div>
-                                        <Link className={"btn btn-info"} to="/book">
-                                             Read more
-                                        </Link>
-                                    </div>
-                                </Media>
-                            </Media>
-                            <hr />
-
+                            <Loader loading={this.state.isLoading}>
+                                <BookPreview/>
+                                <BookPreview/>
+                            </Loader>
 
                         </Col>
                     </Row>
