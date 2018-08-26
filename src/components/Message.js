@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Alert, Button } from 'reactstrap';
+import { Alert } from 'reactstrap';
 
 class Message extends Component {
 

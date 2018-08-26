@@ -1,5 +1,6 @@
 import booksApi from '../api/booksApi';
 import * as actionTypes  from '../constants/actionTypes';
+import convertGoogleBook from '../helpers/covertGoogleBook';
 
 export default {
 
@@ -15,32 +16,13 @@ export default {
 
         if (booksJson.totalItems > 0) {
             for (let bookItem of booksJson.items) {
-                books.push({
-                    title: bookItem.volumeInfo.title,
-                    description: bookItem.volumeInfo.description ? bookItem.volumeInfo.description.substr(1, 200) + '...' : '',
-                    author: '',
-                    imgCoverUrl: 'imageLinks' in bookItem.volumeInfo ? bookItem.volumeInfo.imageLinks.smallThumbnail : null,
-                });
+                books.push(convertGoogleBook.convertToBookPreview(bookItem));
             }
         }
 
         return {
             type: actionTypes.RECEIVE_SEARCHED_BOOKS,
             books: books
-        }
-    },
-
-    createBookDetailsRequestAction(bookId) {
-        return {
-            type: actionTypes.BOOK_DETAILS_REQUEST,
-            bookId: bookId
-        }
-    },
-
-    createReceiveBookDetailsAction(bookDetails) {
-        return {
-            type: actionTypes.RECEIVE_BOOK_DETAILS,
-            bookDetails: bookDetails
         }
     },
 
@@ -95,9 +77,7 @@ export default {
                     dispatch(this.createReceiveSearchedBooksAction(json));
                     console.log(json);
                     if(json.totalItems === 0) {
-                        dispatch(this.createThrowInfoMessageAction(
-                            'Books ware not found'
-                        ));
+                        dispatch(this.createThrowInfoMessageAction('Books ware not found'));
                     }
                 })
         }

@@ -109,6 +109,7 @@ class LiveSearchPage extends Component {
                                             description={book.description}
                                             author={book.author}
                                             imgCoverUrl={book.imgCoverUrl}
+                                            bookId={book.bookId}
                                             key={i}
                                         />
                                     )

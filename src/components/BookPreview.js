@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PropTypes from 'prop-types';
 import { Card, CardBody, Media } from 'reactstrap';
 
 class BookPreview extends Component {
@@ -26,7 +25,7 @@ class BookPreview extends Component {
                                 <br />
 
                                 <div>
-                                    <Link className={"btn btn-success"} to="/book"> Read more </Link>
+                                    <Link className={"btn btn-success"} to={"/book/" + this.props.bookId}> Read more </Link>
                                 </div>
                             </Media>
                         </Media>
@@ -37,20 +36,5 @@ class BookPreview extends Component {
         );
     }
 }
-
-BookPreview.defaultProps = {
-    imgCoverUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png',
-    title: 'a title of a book',
-    author: 'an author of a book',
-    description: 'description'
-};
-
-
-BookPreview.propTypes = {
-    imgCoverUrl: PropTypes.string,
-    title: PropTypes.string,
-    author: PropTypes.string,
-    description: PropTypes.string
-};
 
 export default BookPreview;

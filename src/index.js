@@ -17,7 +17,7 @@ ReactDOM.render(
         <Router>
             <div>
                 <Route exact path="/" component={LiveSearchPage} />
-                <Route path="/book" component={BookPage} />
+                <Route path="/book/:id" component={BookPage} />
             </div>
         </Router>
     </Provider>,

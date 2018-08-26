@@ -2,7 +2,7 @@ import fetch from 'cross-fetch';
 import * as searchFilters from '../constants/searchFilters';
 
 let apiKey = process.env.REACT_APP_GOOGLE_BOOK_API_KEY;
-let baseVolumesUrl = 'https://www.googleapis.com/books/v1/volumes';
+let baseVolumesUrl = 'https://www.googleapis.com/books/v1';
 
 export default {
 
@@ -18,11 +18,11 @@ export default {
         console.log(filters);
 
         bookQuery = encodeURI(bookQuery);
-        return fetch(`${baseVolumesUrl}?q=${bookQuery}${filters}&key=${apiKey}`);
+        return fetch(`${baseVolumesUrl}/volumes?q=${bookQuery}${filters}&key=${apiKey}`);
     },
 
     getBook(bookId) {
-        return fetch(`${baseVolumesUrl}/${bookId}&key=${apiKey}`)
+        return fetch(`${baseVolumesUrl}/volumes/${bookId}?key=${apiKey}`)
     }
 
 }

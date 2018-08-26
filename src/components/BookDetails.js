@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
@@ -7,6 +6,10 @@ import { Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 class BookDetails extends Component {
 
     render() {
+
+        let book = this.props.book;
+        console.log(book);
+
         return (
             <Card>
                 <CardBody>
@@ -15,20 +18,46 @@ class BookDetails extends Component {
                     <br />
                     <ListGroup>
                         <ListGroupItem>
-                            <b>Title:</b> {this.props.title}
+                            <b>Title:</b> {book.title}
                         </ListGroupItem>
 
                         <ListGroupItem>
-                            <b>Author:</b> {this.props.author}
+                            <b>Authors:</b> {book.authors}
                         </ListGroupItem>
 
                         <ListGroupItem>
-                            <b>Price:</b> {this.props.price}
+                            <b>Publisher:</b> {book.publisher}
                         </ListGroupItem>
 
                         <ListGroupItem>
-                            <b>Description: </b> {this.props.description}
+                            <b>Publish date:</b> {book.publishedDate}
                         </ListGroupItem>
+
+                        <ListGroupItem>
+                            <b>Price:</b> {book.price} {book.priceCurrency}
+                        </ListGroupItem>
+
+                        <ListGroupItem>
+                            <b>Identifiers: </b>
+                            {
+                                book.identifiers.map((item) => {
+                                    return `${item.type}: ${item.identifier}, `;
+                                })
+                            }
+                        </ListGroupItem>
+
+                        <ListGroupItem>
+                            <b>Language: </b> {book.language}
+                        </ListGroupItem>
+
+                        <ListGroupItem>
+                            <b>Pages: </b> {book.pageCount}
+                        </ListGroupItem>
+
+                        <ListGroupItem>
+                            <b>Description: </b> {book.description}
+                        </ListGroupItem>
+
 
                     </ListGroup>
 
@@ -37,19 +66,5 @@ class BookDetails extends Component {
         );
     }
 }
-
-BookDetails.defaultProps = {
-    title: 'a title of a book',
-    author: 'an author of a book',
-    description: 'description',
-    price: '20.20'
-};
-
-BookDetails.propTypes = {
-    title: PropTypes.string,
-    author: PropTypes.string,
-    description: PropTypes.string,
-    price: PropTypes.string
-};
 
 export default BookDetails;
