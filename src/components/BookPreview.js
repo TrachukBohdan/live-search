@@ -6,10 +6,6 @@ import { Card, CardBody, Media } from 'reactstrap';
 
 class BookPreview extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

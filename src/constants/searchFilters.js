@@ -1,0 +1,3 @@
+export const FILTER_FOR_SALE = 'FILTER_FOR_SALE';
+export const FILTER_NOT_FOR_SALE = 'FILTER_NOT_FOR_SALE';
+export const FILTER_BOTH = 'FILTER_BOTH';

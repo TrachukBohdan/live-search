@@ -2,15 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import LiveSearch from './LiveSearch';
-import BookPage from './BookPage';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import reducers from './reducers/reducers';
+
+import { Provider } from 'react-redux'
+import LiveSearchPage from './pages/LiveSearchPage';
+import BookPage from './pages/BookPage';
+
+const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
-    <Router>
-        <div>
-            <Route exact path="/" component={LiveSearch} />
-            <Route path="/book" component={BookPage} />
-        </div>
-    </Router>,
+    <Provider store={store}>
+        <Router>
+            <div>
+                <Route exact path="/" component={LiveSearchPage} />
+                <Route path="/book" component={BookPage} />
+            </div>
+        </Router>
+    </Provider>,
     document.getElementById('root')
 );

@@ -14,26 +14,33 @@ class SearchBar extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
-            dropdownOpen: false
+            dropdownOpen: false,
+            searchQuery: this.props.searchQuery
         };
     }
 
     toggleDropDown() {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
+        this.setState({dropdownOpen: !this.state.dropdownOpen});
+    }
+
+    handleChangeQuery(e) {
+        this.setState({searchQuery: e.target.value});
+        this.props.changeSearchQuery(e);
     }
 
     render() {
-
         let filters = [];
-
         for (let filterKey in this.props.searchFilters) {
+            if (!this.props.searchFilters.hasOwnProperty(filterKey)) {
+                continue;
+            }
+
             filters.push(
-                <DropdownItem key={filterKey}
-                              onClick={() => this.props.changeFilter(filterKey)}>
+                <DropdownItem
+                    key={filterKey}
+                    onClick={() => this.props.changeFilter(filterKey)}
+                >
                     {this.props.searchFilters[filterKey]}
                 </DropdownItem>
             );
@@ -43,19 +50,33 @@ class SearchBar extends Component {
             <Card>
                 <CardBody>
                     <h4>Live books search</h4>
+
                     <InputGroup>
-                        <Input placeholder="Search books ..." />
-                        <InputGroupButtonDropdown addonType="append"
-                                                  isOpen={this.state.dropdownOpen}
-                                                  toggle={(e) => this.toggleDropDown(e)}>
+                        <Input
+                            type={"text"}
+                            placeholder="Search books ..."
+                            onChange={(e) => this.handleChangeQuery(e) }
+                            value={this.state.searchQuery}
+                        />
+
+                        <InputGroupButtonDropdown
+                            addonType="append"
+                            isOpen={this.state.dropdownOpen}
+                            toggle={() => this.toggleDropDown()}
+                        >
 
                             <DropdownToggle className={"dropdown-toggle btn btn-success"} caret>
                                 {this.props.searchFilters[this.props.selectedFilter]}
                             </DropdownToggle>
 
-                            <DropdownMenu> {filters} </DropdownMenu>
+                            <DropdownMenu>
+                                {filters}
+                            </DropdownMenu>
+
                         </InputGroupButtonDropdown>
+
                     </InputGroup>
+
                 </CardBody>
             </Card>
         );
